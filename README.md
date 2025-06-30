@@ -114,9 +114,9 @@ npx vercel login
 
 ```shell
 npx vercel link --repo
-? Set up and develop “~/<your_path_to_campsite>”? [Y/n] y
+? Set up and develop "~/<your_path_to_campsite>"? [Y/n] y
 ? Which scope should contain your project? Campsite
-? Found project “campsite/campsite”. Link to it? [Y/n] y
+? Found project "campsite/campsite". Link to it? [Y/n] y
 🔗  Linked to campsite/campsite (created .vercel)
 ```
 
@@ -203,3 +203,97 @@ When you deploy Campsite, `config/credentials/production.yml.enc` must be presen
 To use calls in development, you'll need to treat the `http://app.campsite.test:3000` origin as secure. In a Chromium-based browser, you can do that at chrome://flags/#unsafely-treat-insecure-origin-as-secure.
 
 For any call features that require webhooks (like getting chat bubbles in message threads when calls start), you should [use ngrok](https://github.com/campsite/campsite/tree/main/api#using-ngrok-for-publicly-accessible-https-development-urls). You can enable webhooks in the [developer tab of the 100ms dashboard](https://dashboard.100ms.live/developer). The webhook URL should be set to `https://api-dev.campsite.com/v1/integrations/hms/events`, and there should be a webhook header with the name `X-Passcode` and a value that comes from running `Rails.application.credentials.hms.webhook_passcode` in a development Rails console. Be sure that you configure webhooks in the "Development" workspace and disable them when you're done working in ngrok (webhooks in the "Production" workspace should always be enabled and the configuration shouldn't change).
+
+## Repository Overview
+
+This is the **open-source version of Campsite**, a team collaboration and communication platform. Here's what this repository contains:
+
+### **Project Structure**
+This is a **monorepo** using:
+- **pnpm** for package management with workspaces
+- **Turbo** for build orchestration and caching
+- **Multiple applications and shared packages**
+
+### **Main Applications** (`apps/` directory):
+
+1. **Web App** (`apps/web/`) - The main React/Next.js frontend application
+   - Built with Next.js, React, TypeScript
+   - Uses Tailwind CSS for styling
+   - Real-time features with Pusher
+   - Rich text editing with Tiptap
+   - Video calls with 100ms integration
+
+2. **Marketing Site** (`apps/site/`) - The public-facing website
+
+3. **API** (`api/`) - Ruby on Rails backend
+   - Rails 7 application
+   - PostgreSQL database with PlanetScale
+   - Real-time features and WebSocket support
+   - Comprehensive REST API
+
+4. **Additional Services**:
+   - **Sync Server** - Real-time synchronization
+   - **Styled Text Server** - Text processing
+   - **Figma Integration** - Figma frame rendering
+   - **Integrations** - Third-party service connections
+   - **Sanity Studio** - Content management
+
+### **Key Features & Integrations**
+
+**Core Functionality**:
+- Team collaboration and messaging
+- Video calls and conferencing (100ms)
+- File sharing and media management (S3 + Imgix CDN)
+- Real-time updates (Pusher WebSockets)
+- Rich text editing and document collaboration
+
+**Third-party Integrations**:
+- **AWS S3** - File storage
+- **Imgix** - Image processing and CDN
+- **100ms** - Video conferencing
+- **OpenAI** - AI-powered summaries
+- **Pusher** - Real-time messaging
+- **Slack, Linear, Figma** - Workspace integrations
+- **Zapier** - Automation
+- **Postmark** - Email delivery
+
+### **Technology Stack**
+
+**Frontend**:
+- Next.js 14+ with TypeScript
+- React with modern hooks and state management (Jotai)
+- Tailwind CSS for styling
+- Radix UI components
+- Framer Motion for animations
+- React Query for data fetching
+
+**Backend**:
+- Ruby on Rails 7
+- PostgreSQL with PlanetScale
+- Redis for caching
+- Background job processing
+- Feature flags with Flipper
+
+**Infrastructure**:
+- Vercel for frontend deployment
+- Fly.io for API deployment (based on fly.toml)
+- AWS for file storage and services
+- Desktop app via ToDesktop
+
+### **Development Setup**
+
+The repository includes comprehensive setup scripts:
+- `script/setup` - Initial project setup
+- `script/dev` - Start all services with Overmind
+- Uses credentials management for API keys and secrets
+- Supports local development with ngrok for webhooks
+
+### **Notable Architecture Decisions**
+
+1. **Monorepo Structure** - All related applications in one repository
+2. **Microservices Approach** - Separate services for different concerns
+3. **Real-time First** - Built around live collaboration
+4. **Integration Heavy** - Designed to work with many external tools
+5. **Self-hostable** - Can be deployed independently
+
+This is a production-grade, feature-rich team collaboration platform that demonstrates modern full-stack development practices with React, Rails, and extensive third-party integrations. The codebase is well-structured for both development and deployment, with comprehensive documentation for self-hosting.
