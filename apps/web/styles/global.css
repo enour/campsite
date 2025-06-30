@@ -169,6 +169,124 @@
       }
     }
   }
+
+  .yellow {
+    @apply text-primary;
+
+    --text-blue: theme(colors.amber.700);
+    --tag-border: theme(colors.amber.200);
+    --tag-bg: theme(colors.amber.100);
+    --tag-focus: 0px 0px 0px 1px theme(colors.amber.500), 0px 0px 0px 3px theme(colors.amber.500 / 0.15);
+
+    --text-primary: theme(colors.amber.900);
+    --text-secondary: theme(colors.amber.700);
+    --text-tertiary: theme(colors.amber.600);
+    --text-quaternary: theme(colors.amber.500);
+    --text-primary-action: theme(colors.white);
+    --text-highlight: theme(colors.yellow.900);
+
+    --bg-main: theme(colors.amber.50);
+
+    --bg-primary-action: theme(colors.amber.800);
+    --bg-primary-action-hover: theme(colors.amber.900);
+    --bg-secondary-action: theme(colors.amber.200);
+    --bg-tertiary-action: theme(colors.amber.100);
+
+    --bg-button: theme(colors.amber.100);
+
+    --bg-primary: theme(colors.amber.25);
+    --bg-secondary: theme(colors.amber.50);
+    --bg-tertiary: theme(colors.amber.100);
+    --bg-quaternary: theme(colors.amber.150);
+    --bg-elevated: theme(colors.amber.25);
+    --bg-react-select: theme(colors.amber.25);
+    --bg-highlight: theme(colors.yellow.300 / 40%);
+
+    --grad-primary-rgb: 255, 251, 235;
+
+    --border-primary: theme(colors.amber.800 / 0.15);
+    --border-primary-opaque: theme(colors.amber.200);
+    --border-secondary: theme(colors.amber.800 / 0.1);
+    --border-secondary-opaque: theme(colors.amber.150);
+    --border-tertiary: theme(colors.amber.800 / 0.06);
+
+    --scrollbar-color: theme(colors.amber.400 / 0.8);
+
+    --base-shadow-color: rgb(245 158 11 / 0.08);
+
+    --button-drop-shadow: rgb(245 158 11 / 0.2);
+    --button-shadow: inset 0px 1px 0px 0px rgb(255 255 255 / 1), 0px 0px 0px 1px rgb(245 158 11 / 0.15),
+      0px 1px 0px 0px rgb(245 158 11 / 0.2), 0px 2px 2px 0px rgb(245 158 11 / 0.1), 0px 3px 3px 0px rgb(245 158 11 / 0.05),
+      0px 4px 4px 0px rgb(245 158 11 / 0.02);
+
+    .bg-main,
+    .bg-elevated {
+      --base-shadow-color: rgb(245 158 11 / 0.06);
+
+      .bg-primary {
+        --base-shadow-color: rgb(245 158 11 / 0.08);
+      }
+    }
+  }
+
+  .purple {
+    @apply text-primary;
+
+    --text-blue: theme(colors.violet.700);
+    --tag-border: theme(colors.violet.200);
+    --tag-bg: theme(colors.violet.100);
+    --tag-focus: 0px 0px 0px 1px theme(colors.violet.500), 0px 0px 0px 3px theme(colors.violet.500 / 0.15);
+
+    --text-primary: theme(colors.violet.900);
+    --text-secondary: theme(colors.violet.700);
+    --text-tertiary: theme(colors.violet.600);
+    --text-quaternary: theme(colors.violet.500);
+    --text-primary-action: theme(colors.white);
+    --text-highlight: theme(colors.violet.100);
+
+    --bg-main: theme(colors.violet.50);
+
+    --bg-primary-action: theme(colors.violet.800);
+    --bg-primary-action-hover: theme(colors.violet.900);
+    --bg-secondary-action: theme(colors.violet.200);
+    --bg-tertiary-action: theme(colors.violet.100);
+
+    --bg-button: theme(colors.violet.100);
+
+    --bg-primary: theme(colors.violet.25);
+    --bg-secondary: theme(colors.violet.50);
+    --bg-tertiary: theme(colors.violet.100);
+    --bg-quaternary: theme(colors.violet.150);
+    --bg-elevated: theme(colors.violet.25);
+    --bg-react-select: theme(colors.violet.25);
+    --bg-highlight: theme(colors.violet.200 / 40%);
+
+    --grad-primary-rgb: 250, 245, 255;
+
+    --border-primary: theme(colors.violet.800 / 0.15);
+    --border-primary-opaque: theme(colors.violet.200);
+    --border-secondary: theme(colors.violet.800 / 0.1);
+    --border-secondary-opaque: theme(colors.violet.150);
+    --border-tertiary: theme(colors.violet.800 / 0.06);
+
+    --scrollbar-color: theme(colors.violet.400 / 0.8);
+
+    --base-shadow-color: rgb(139 92 246 / 0.08);
+
+    --button-drop-shadow: rgb(139 92 246 / 0.2);
+    --button-shadow: inset 0px 1px 0px 0px rgb(255 255 255 / 1), 0px 0px 0px 1px rgb(139 92 246 / 0.15),
+      0px 1px 0px 0px rgb(139 92 246 / 0.2), 0px 2px 2px 0px rgb(139 92 246 / 0.1), 0px 3px 3px 0px rgb(139 92 246 / 0.05),
+      0px 4px 4px 0px rgb(139 92 246 / 0.02);
+
+    .bg-main,
+    .bg-elevated {
+      --base-shadow-color: rgb(139 92 246 / 0.06);
+
+      .bg-primary {
+        --base-shadow-color: rgb(139 92 246 / 0.08);
+      }
+    }
+  }
 }
 
 body.grabbing * {

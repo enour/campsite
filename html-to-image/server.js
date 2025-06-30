@@ -19,20 +19,27 @@ import { Cluster } from 'puppeteer-cluster'
   await cluster.task(async ({ page, data }) => {
     const { html, styles, width, height = null, deviceScaleFactor = 1, theme = 'light' } = data
 
-    console.log('received params', { html: !!html, styles: !!styles, width, height, deviceScaleFactor, theme })
+console.log('received params', { html: !!html, styles: !!styles, width, height, deviceScaleFactor, theme })
 
-    await page.emulateMediaFeatures([
-      {
-        name: 'prefers-color-scheme',
-        value: theme
-      }
-    ])
+// Validate theme
+const validThemes = ['light', 'dark', 'yellow', 'purple']
+const resolvedTheme = validThemes.includes(theme) ? theme : 'light'
+
+          await page.emulateMediaFeatures([
+        {
+          name: 'prefers-color-scheme',
+          value: resolvedTheme === 'dark' ? 'dark' : 'light'
+        }
+      ])
 
     // To prevent memory issues, cap the height to 2x the width
     const maxHeight = Math.max(height || 0, width * 2)
 
     await page.setViewport({ width, height: maxHeight, deviceScaleFactor })
-    await page.setContent(html)
+    
+    // Wrap HTML with theme class
+    const themedHtml = `<div class="${resolvedTheme}">${html}</div>`
+    await page.setContent(themedHtml)
     await page.addStyleTag({ content: styles })
 
     const bodyHandle = await page.$('.prose')

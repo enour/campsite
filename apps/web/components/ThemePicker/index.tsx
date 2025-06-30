@@ -4,6 +4,7 @@ import * as SettingsSection from 'components/SettingsSection'
 import { m } from 'framer-motion'
 import { useTheme } from 'next-themes'
 
+import { KeyboardShortcut } from '@campsite/ui'
 import { cn } from '@campsite/ui/src/utils'
 
 import { Svg } from '@/components/Svg'
@@ -52,7 +53,7 @@ export const ThemePicker = () => {
             aria-label='View density'
             onValueChange={(selectedTheme: Theme) => handleChange(selectedTheme)}
           >
-            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-3'>
+            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-5'>
               <div
                 className={cn(
                   'light flex items-end justify-center rounded-md border bg-gray-50 px-1.5 pt-3 transition',
@@ -72,6 +73,9 @@ export const ThemePicker = () => {
                   <span className='absolute inset-x-0 bottom-2 flex flex-col items-center sm:-bottom-1'>
                     <span className='relative'>
                       <span className={buttonClasses}>Light</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+1' />
+                      </div>
 
                       {theme === 'light' && (
                         <m.span
@@ -102,10 +106,79 @@ export const ThemePicker = () => {
                   <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
                     <span className='relative'>
                       <span className={buttonClasses}>Dark</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+2' />
+                      </div>
 
                       {theme === 'dark' && (
                         <m.span
                           className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-blue-500 max-sm:hidden'
+                          layoutId='underline'
+                        />
+                      )}
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div
+                className={cn(
+                  'yellow flex items-end justify-center rounded-md border bg-amber-50 px-1.5 pt-3 transition',
+                  {
+                    'border-amber-500 ring-2 ring-amber-100': theme === 'yellow'
+                  }
+                )}
+              >
+                <RadioGroup.Item value='yellow' id='yellowTheme' />
+                <label className='relative cursor-pointer' htmlFor='yellowTheme'>
+                  <span className='block h-full w-full overflow-hidden'>
+                    <span className='block rounded-t-sm border border-b-0 shadow-xl shadow-amber-900/20'>
+                      <Svg src='/themes/theme-yellow' responsive />
+                    </span>
+                  </span>
+                  <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
+                    <span className='relative'>
+                      <span className={buttonClasses}>Yellow</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+3' />
+                      </div>
+
+                      {theme === 'yellow' && (
+                        <m.span
+                          className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-amber-500 max-sm:hidden'
+                          layoutId='underline'
+                        />
+                      )}
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div
+                className={cn(
+                  'purple flex items-end justify-center rounded-md border bg-violet-50 px-1.5 pt-3 transition',
+                  {
+                    'border-violet-500 ring-2 ring-violet-100': theme === 'purple'
+                  }
+                )}
+              >
+                <RadioGroup.Item value='purple' id='purpleTheme' />
+                <label className='relative cursor-pointer' htmlFor='purpleTheme'>
+                  <span className='block h-full w-full overflow-hidden'>
+                    <span className='block rounded-t-sm border border-b-0 shadow-xl shadow-violet-900/20'>
+                      <Svg src='/themes/theme-purple' responsive />
+                    </span>
+                  </span>
+                  <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
+                    <span className='relative'>
+                      <span className={buttonClasses}>Purple</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+4' />
+                      </div>
+
+                      {theme === 'purple' && (
+                        <m.span
+                          className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-violet-500 max-sm:hidden'
                           layoutId='underline'
                         />
                       )}
@@ -136,6 +209,9 @@ export const ThemePicker = () => {
                   <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
                     <span className='relative'>
                       <span className={buttonClasses}>System</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+5' />
+                      </div>
 
                       {theme === 'system' && (
                         <m.span
