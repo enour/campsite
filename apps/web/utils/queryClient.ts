@@ -129,10 +129,21 @@ export const queryClient = () =>
       queries: {
         networkMode,
         refetchOnWindowFocus: false,
-        retry
+        retry,
+        staleTime: 5 * 60 * 1000, // 5 minutes - data is fresh for 5 minutes
+        gcTime: 10 * 60 * 1000, // 10 minutes - keep in cache for 10 minutes
+        refetchOnMount: 'always', // Always refetch on mount for real-time app
+        refetchOnReconnect: 'always', // Refetch when reconnecting
       },
       mutations: {
-        networkMode
+        networkMode,
+        retry: (failureCount, error) => {
+          // Don't retry mutations on client errors
+          if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+            return false
+          }
+          return failureCount < 2 // Retry mutations fewer times
+        }
       }
     }
   })
