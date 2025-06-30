@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
+import { useDebouncedCallback } from 'use-debounce'
 
 import { Button, LazyLoadingSpinner, UIText } from '@campsite/ui'
 
@@ -12,16 +13,27 @@ interface Props {
 }
 
 export function InfiniteLoader(props: Props) {
-  const [ref, inView] = useInView()
-
   const { isError, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } = props
+  
+  // Debounce fetchNextPage to prevent excessive API calls during rapid scrolling
+  const debouncedFetchNextPage = useDebouncedCallback(
+    fetchNextPage,
+    100, // 100ms debounce
+    { leading: true, trailing: false }
+  )
+  
+  const [ref, inView] = useInView({
+    threshold: 0,
+    rootMargin: '100px', // Trigger 100px before the element is visible for better UX
+  })
+
   const shouldFetch = inView && !isError && !isFetching && !isFetchingNextPage && hasNextPage
 
   useEffect(() => {
     if (shouldFetch) {
-      fetchNextPage()
+      debouncedFetchNextPage()
     }
-  }, [fetchNextPage, shouldFetch])
+  }, [debouncedFetchNextPage, shouldFetch])
 
   if (!hasNextPage) return null
 

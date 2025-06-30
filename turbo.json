@@ -8,11 +8,12 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**", ".next/**", ".next/cache/**"],
+      "env": ["NODE_ENV", "NEXT_PUBLIC_*", "VERCEL_*"]
     },
     "test": {
       "dependsOn": ["^build", "^test"],
-      "outputs": []
+      "outputs": ["coverage/**"]
     },
     "start": {
       "dependsOn": ["build"],
@@ -20,10 +21,14 @@
       "persistent": true
     },
     "lint": {
-      "outputs": []
+      "outputs": [".eslintcache"]
     },
     "lint:fix": {
-      "outputs": []
+      "outputs": [".eslintcache"]
+    },
+    "analyze": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/analyze/**"]
     },
     "sentry:sourcemaps": {
       "outputs": []
