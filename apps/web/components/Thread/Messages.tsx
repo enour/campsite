@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { memo, useEffect, useMemo, useRef } from 'react'
 import { useAtomValue } from 'jotai'
 import toast from 'react-hot-toast'
 
@@ -124,7 +124,7 @@ interface Props {
   onNewMessage: (message: Message) => void
 }
 
-export function Messages({ thread, messages, hasNextPage, onNewMessage }: Props) {
+export const Messages = memo(function Messages({ thread, messages, hasNextPage, onNewMessage }: Props) {
   const lastMessageId = useRef<string | null>(null)
   const editMode = !!useAtomValue(editModeAtom)
   const ref = useRef<HTMLDivElement>(null)
@@ -169,7 +169,7 @@ export function Messages({ thread, messages, hasNextPage, onNewMessage }: Props)
       <DNDIndicator thread={thread} />
     </div>
   )
-}
+})
 
 function DNDIndicator({ thread }: { thread: MessageThread }) {
   const isSingleMember = !thread.group && thread.other_members.length === 1
