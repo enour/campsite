@@ -188,6 +188,39 @@ export const ThemePicker = () => {
               </div>
 
               <div
+                className={cn(
+                  'turquoise flex items-end justify-center rounded-md border bg-teal-50 px-1.5 pt-3 transition',
+                  {
+                    'border-teal-500 ring-2 ring-teal-100': theme === 'turquoise'
+                  }
+                )}
+              >
+                <RadioGroup.Item value='turquoise' id='turquoiseTheme' />
+                <label className='relative cursor-pointer' htmlFor='turquoiseTheme'>
+                  <span className='block h-full w-full overflow-hidden'>
+                    <span className='block rounded-t-sm border border-b-0 shadow-xl shadow-teal-900/20'>
+                      <Svg src='/themes/theme-turquoise' responsive />
+                    </span>
+                  </span>
+                  <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
+                    <span className='relative'>
+                      <span className={buttonClasses}>Turquoise</span>
+                      <div className='mt-1 flex justify-center'>
+                        <KeyboardShortcut shortcut='mod+shift+6' />
+                      </div>
+
+                      {theme === 'turquoise' && (
+                        <m.span
+                          className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-teal-500 max-sm:hidden'
+                          layoutId='underline'
+                        />
+                      )}
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div
                 className={cn('bg-secondary flex items-end justify-center rounded-md border px-1.5 pt-3 transition', {
                   dark: systemTheme === 'dark',
                   light: systemTheme === 'light',
@@ -210,7 +243,7 @@ export const ThemePicker = () => {
                     <span className='relative'>
                       <span className={buttonClasses}>System</span>
                       <div className='mt-1 flex justify-center'>
-                        <KeyboardShortcut shortcut='mod+shift+5' />
+                        <KeyboardShortcut shortcut='mod+shift+7' />
                       </div>
 
                       {theme === 'system' && (
