@@ -53,7 +53,7 @@ export const ThemePicker = () => {
             aria-label='View density'
             onValueChange={(selectedTheme: Theme) => handleChange(selectedTheme)}
           >
-            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-5'>
+            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-6'>
               <div
                 className={cn(
                   'light flex items-end justify-center rounded-md border bg-gray-50 px-1.5 pt-3 transition',

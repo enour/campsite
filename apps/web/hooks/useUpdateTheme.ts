@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { apiClient } from '@/utils/queryClient'
 
-export type Theme = 'light' | 'dark' | 'system' | 'yellow' | 'purple'
+export type Theme = 'light' | 'dark' | 'system' | 'yellow' | 'purple' | 'turquoise'
 
 type UpdateThemeProps = {
   theme: Theme
