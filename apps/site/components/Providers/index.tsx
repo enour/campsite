@@ -21,7 +21,7 @@ export default function Providers({ children, router }: ProvidersProps) {
       {router === 'pages' && <SEO />}
 
       <LazyMotion features={domAnimation}>
-        <Theme attribute='class' themes={['light', 'dark', 'system', 'yellow', 'purple']}>
+                 <Theme attribute='class' themes={['light', 'dark', 'system', 'yellow', 'purple', 'turquoise']}>
           <BalanceProvider>
             <PageLayout>{children}</PageLayout>
 

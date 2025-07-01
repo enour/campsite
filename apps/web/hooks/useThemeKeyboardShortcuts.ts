@@ -37,9 +37,16 @@ export function useThemeKeyboardShortcuts() {
     callback: () => switchToTheme('purple')
   })
 
-  // Ctrl/Cmd + Shift + 5 for System theme
+  // Ctrl/Cmd + Shift + 5 for System theme (moved to 7)
+  // Ctrl/Cmd + Shift + 6 for Turquoise theme
   useOrderedLayeredHotkeys({
-    keys: ['mod+shift+5'],
+    keys: ['mod+shift+6'],
+    callback: () => switchToTheme('turquoise')
+  })
+
+  // Ctrl/Cmd + Shift + 7 for System theme
+  useOrderedLayeredHotkeys({
+    keys: ['mod+shift+7'],
     callback: () => switchToTheme('system')
   })
 }

@@ -22,7 +22,7 @@ import { Cluster } from 'puppeteer-cluster'
 console.log('received params', { html: !!html, styles: !!styles, width, height, deviceScaleFactor, theme })
 
 // Validate theme
-const validThemes = ['light', 'dark', 'yellow', 'purple']
+const validThemes = ['light', 'dark', 'yellow', 'purple', 'turquoise']
 const resolvedTheme = validThemes.includes(theme) ? theme : 'light'
 
           await page.emulateMediaFeatures([

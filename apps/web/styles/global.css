@@ -287,6 +287,65 @@
       }
     }
   }
+
+  .turquoise {
+    @apply text-primary;
+
+    --text-blue: theme(colors.teal.700);
+    --tag-border: theme(colors.teal.200);
+    --tag-bg: theme(colors.teal.100);
+    --tag-focus: 0px 0px 0px 1px theme(colors.teal.500), 0px 0px 0px 3px theme(colors.teal.500 / 0.15);
+
+    --text-primary: theme(colors.teal.900);
+    --text-secondary: theme(colors.teal.700);
+    --text-tertiary: theme(colors.teal.600);
+    --text-quaternary: theme(colors.teal.500);
+    --text-primary-action: theme(colors.white);
+    --text-highlight: theme(colors.teal.100);
+
+    --bg-main: theme(colors.teal.50);
+
+    --bg-primary-action: theme(colors.teal.800);
+    --bg-primary-action-hover: theme(colors.teal.900);
+    --bg-secondary-action: theme(colors.teal.200);
+    --bg-tertiary-action: theme(colors.teal.100);
+
+    --bg-button: theme(colors.teal.100);
+
+    --bg-primary: theme(colors.teal.25);
+    --bg-secondary: theme(colors.teal.50);
+    --bg-tertiary: theme(colors.teal.100);
+    --bg-quaternary: theme(colors.teal.150);
+    --bg-elevated: theme(colors.teal.25);
+    --bg-react-select: theme(colors.teal.25);
+    --bg-highlight: theme(colors.teal.200 / 40%);
+
+    --grad-primary-rgb: 240, 253, 250;
+
+    --border-primary: theme(colors.teal.800 / 0.15);
+    --border-primary-opaque: theme(colors.teal.200);
+    --border-secondary: theme(colors.teal.800 / 0.1);
+    --border-secondary-opaque: theme(colors.teal.150);
+    --border-tertiary: theme(colors.teal.800 / 0.06);
+
+    --scrollbar-color: theme(colors.teal.400 / 0.8);
+
+    --base-shadow-color: rgb(20 184 166 / 0.08);
+
+    --button-drop-shadow: rgb(20 184 166 / 0.2);
+    --button-shadow: inset 0px 1px 0px 0px rgb(255 255 255 / 1), 0px 0px 0px 1px rgb(20 184 166 / 0.15),
+      0px 1px 0px 0px rgb(20 184 166 / 0.2), 0px 2px 2px 0px rgb(20 184 166 / 0.1), 0px 3px 3px 0px rgb(20 184 166 / 0.05),
+      0px 4px 4px 0px rgb(20 184 166 / 0.02);
+
+    .bg-main,
+    .bg-elevated {
+      --base-shadow-color: rgb(20 184 166 / 0.06);
+
+      .bg-primary {
+        --base-shadow-color: rgb(20 184 166 / 0.08);
+      }
+    }
+  }
 }
 
 body.grabbing * {

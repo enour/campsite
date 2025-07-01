@@ -6,7 +6,7 @@ interface Props {
 
 export function ThemeProvider({ children }: Props) {
   return (
-    <Theme attribute='class' themes={['light', 'dark', 'system', 'yellow', 'purple']}>
+    <Theme attribute='class' themes={['light', 'dark', 'system', 'yellow', 'purple', 'turquoise']}>
       {children}
     </Theme>
   )

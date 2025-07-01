@@ -2740,7 +2740,7 @@ export type UsersMeTwoFactorAuthenticationDeleteRequest = {
 }
 
 export type UserPreferences = {
-  theme?: 'system' | 'light' | 'dark' | 'yellow' | 'purple' | null
+  theme?: 'system' | 'light' | 'dark' | 'yellow' | 'purple' | 'turquoise' | null
   email_notifications?: 'enabled' | 'disabled' | null
   message_email_notifications?: 'enabled' | 'disabled' | null
   prefers_desktop_app?: 'enabled' | 'disabled' | null
