@@ -10,6 +10,7 @@ import {
   Avatar,
   Badge,
   ChevronSelectIcon,
+  ClockIcon,
   FaceSmileIcon,
   GearIcon,
   GlobeIcon,
@@ -32,6 +33,27 @@ import { useGetUnreadNotificationsCount } from '@/hooks/useGetUnreadNotification
 import { useViewerCanCreateCustomReaction } from '@/hooks/useViewerCanCreateCustomReaction'
 import { useViewerCanManageIntegrations } from '@/hooks/useViewerCanManageIntegrations'
 import { useViewerIsAdmin } from '@/hooks/useViewerIsAdmin'
+
+// Helper to get recently accessed organizations from localStorage
+function getRecentOrganizations(): string[] {
+  try {
+    const recent = localStorage.getItem('recent-organizations')
+    return recent ? JSON.parse(recent) : []
+  } catch {
+    return []
+  }
+}
+
+// Helper to update recently accessed organizations
+function updateRecentOrganizations(orgSlug: string) {
+  try {
+    const recent = getRecentOrganizations()
+    const updatedRecent = [orgSlug, ...recent.filter(slug => slug !== orgSlug)].slice(0, 5)
+    localStorage.setItem('recent-organizations', JSON.stringify(updatedRecent))
+  } catch {
+    // Silently fail if localStorage is not available
+  }
+}
 
 export function OrganizationSwitcher({ trigger }: { trigger?: React.ReactNode }) {
   const { scope } = useScope()
@@ -58,7 +80,14 @@ export function OrganizationSwitcher({ trigger }: { trigger?: React.ReactNode })
   const hasMembershipRequests = membershipRequests && membershipRequests.data.length > 0
   const { data: organization } = useGetCurrentOrganization()
 
-  // avoid flashing the = Menu button while loading
+  // Update recent organizations when scope changes
+  React.useEffect(() => {
+    if (scope && currentOrganization) {
+      updateRecentOrganizations(scope)
+    }
+  }, [scope, currentOrganization])
+
+  // avoid flashing the Menu button while loading
   if (organizationsLoading || (scope && !currentOrganization)) {
     if (isMobile) {
       return <div className='bg-secondary h-10 w-10 rounded-full' />
@@ -71,6 +100,14 @@ export function OrganizationSwitcher({ trigger }: { trigger?: React.ReactNode })
       </div>
     )
   }
+
+  // Get recent organizations for quick access
+  const recentOrgSlugs = getRecentOrganizations()
+  const recentOrganizations = memberships?.filter(m => 
+    recentOrgSlugs.includes(m.organization.slug) && m.organization.slug !== scope
+  ).sort((a, b) => 
+    recentOrgSlugs.indexOf(a.organization.slug) - recentOrgSlugs.indexOf(b.organization.slug)
+  ).slice(0, 3) || []
 
   const defaultTrigger = (
     <button className='hover:bg-quaternary relative flex cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-md p-1.5 text-sm focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-100'>
@@ -139,6 +176,38 @@ export function OrganizationSwitcher({ trigger }: { trigger?: React.ReactNode })
     }
   ])
 
+  // Recent organizations section
+  const recentItems = buildMenuItems(
+    recentOrganizations.map(({ organization }) => {
+      const unreadCount = unreadCounts.data?.home_inbox[organization.slug] || 0
+
+      return {
+        type: 'item',
+        label: organization.name,
+        url: `/${organization.slug}`,
+        leftSlot: (
+          <Avatar
+            size='xs'
+            key={organization.id}
+            name={organization.name}
+            urls={organization.avatar_urls}
+            rounded='rounded'
+          />
+        ),
+        rightSlot: (
+          <>
+            {organization.slug === COMMUNITY_SLUG && <GlobeIcon />}
+            {unreadCount > 0 && (
+              <span className='ml-1 flex h-5 items-center justify-center self-center rounded-full bg-blue-500 px-2.5 font-mono text-[10px] font-semibold leading-none text-white'>
+                {unreadCount}
+              </span>
+            )}
+          </>
+        )
+      }
+    })
+  )
+
   const mobileItems = buildMenuItems(
     memberships
       ?.filter((o) => o.id !== currentOrganization?.id)
@@ -174,7 +243,21 @@ export function OrganizationSwitcher({ trigger }: { trigger?: React.ReactNode })
 
   const allItems = buildMenuItems([
     ...items,
-    !isLg && items.length > 0 && { type: 'separator' },
+    (!isLg || !recentItems.length) && items.length > 0 && { type: 'separator' },
+    // Show recent organizations on desktop only if there are any
+    ...(isLg && recentItems.length > 0 ? [
+      {
+        type: 'label',
+        label: (
+          <div className='flex items-center gap-1.5 text-xs'>
+            <ClockIcon size={12} />
+            <span>Recent</span>
+          </div>
+        )
+      },
+      ...recentItems,
+      { type: 'separator' }
+    ] : []),
     ...(!isLg ? mobileItems : []),
     (!isLg || memberships?.length === 1) && {
       type: 'item',

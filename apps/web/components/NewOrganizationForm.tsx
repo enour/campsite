@@ -6,12 +6,13 @@ import toast from 'react-hot-toast'
 import slugify from 'slugify'
 import { z } from 'zod'
 
-import { Button, cn, PencilIcon, Select, SelectTrigger, SelectValue, TextField, Tooltip, UIText } from '@campsite/ui'
+import { Avatar, Button, cn, PencilIcon, Select, SelectTrigger, SelectValue, TextField, Tooltip, UIText } from '@campsite/ui'
 
 import { AvatarUploader } from '@/components/AvatarUploader'
 import { Form, Title } from '@/components/OrgOnboarding/Components'
 import { useCreateOrganization } from '@/hooks/useCreateOrganization'
 import { apiErrorToast } from '@/utils/apiErrorToast'
+import { useGetOrganizationMemberships } from '@/hooks/useGetOrganizationMemberships'
 
 const NO_SELECTION = 'no-selection'
 const OTHER_SELECTION = 'other'
@@ -110,6 +111,53 @@ const DEFAULT_NEW_ORG_VALUES: NewOrgSchema = {
 
 type NewOrgSchema = z.infer<typeof newOrgSchema>
 
+function MultiOrgOnboardingTip() {
+  const { data: memberships } = useGetOrganizationMemberships()
+  
+  if (!memberships || memberships.length === 0) return null
+  
+  return (
+    <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+      <div className="flex items-start gap-3">
+        <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span className="text-white text-sm font-semibold">{memberships.length + 1}</span>
+        </div>
+        <div>
+          <UIText weight="font-medium" className="text-blue-900 dark:text-blue-100">
+            Creating your {memberships.length === 1 ? 'second' : 'next'} organization
+          </UIText>
+          <UIText size="text-sm" className="text-blue-800 dark:text-blue-200 mt-1">
+            You can easily switch between organizations using the sidebar or keyboard shortcuts (⌘+1-9). 
+            Each organization has its own projects, members, and settings.
+          </UIText>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {memberships.slice(0, 3).map(membership => (
+              <div key={membership.id} className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-gray-800 rounded-md border">
+                <Avatar 
+                  size="xs" 
+                  name={membership.organization.name} 
+                  urls={membership.organization.avatar_urls}
+                  rounded="rounded"
+                />
+                <UIText size="text-xs" className="text-gray-700 dark:text-gray-300">
+                  {membership.organization.name}
+                </UIText>
+              </div>
+            ))}
+            {memberships.length > 3 && (
+              <div className="flex items-center px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md">
+                <UIText size="text-xs" className="text-gray-600 dark:text-gray-400">
+                  +{memberships.length - 3} more
+                </UIText>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function NewOrganizationForm() {
   const createOrganizationMutation = useCreateOrganization()
   const {
@@ -162,7 +210,9 @@ export function NewOrganizationForm() {
   )
 
   return (
-    <>
+    <div className="mx-auto w-full max-w-md">
+      <MultiOrgOnboardingTip />
+      
       <Title
         title='Create your organization'
         subtitle='This is the new home for all of your team’s conversations. Next you will set up your workspace and invite your team.'
@@ -339,7 +389,7 @@ export function NewOrganizationForm() {
           </Button>
         </div>
       </Form>
-    </>
+    </div>
   )
 }
 
