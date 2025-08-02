@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { isMacOs } from 'react-device-detect'
 import { useInView } from 'react-intersection-observer'
 
-import { LayeredHotkeys } from '@campsite/ui'
+import { LayeredHotkeys, UIText } from '@campsite/ui'
 import { useIsDesktopApp } from '@campsite/ui/src/hooks'
 import { cn } from '@campsite/ui/src/utils'
 
@@ -30,6 +30,8 @@ import { useScope } from '@/contexts/scope'
 import { useChatSubscriptions } from '@/hooks/useChatSubscriptions'
 import { useGetCurrentOrganization } from '@/hooks/useGetCurrentOrganization'
 import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
+import { useGetOrganizationMemberships } from '@/hooks/useGetOrganizationMemberships'
+import { useGetUnreadNotificationsCount } from '@/hooks/useGetUnreadNotificationsCount'
 import { useIsOrganizationMember } from '@/hooks/useIsOrganizationMember'
 import { useLiveOrganizationUpdates } from '@/hooks/useLiveOrganizationUpdates'
 import { useProjectSubscriptions } from '@/hooks/useProjectSubscriptions'
@@ -38,6 +40,7 @@ import { useShowOrgSwitcherSidebar } from '@/hooks/useShowOrgSwitcherSidebar'
 import { RecentlyViewedPopover } from './RecentlyViewed/RecentlyViewedPopover'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarInbox } from './SidebarInbox'
+import { MultiOrgActivityIndicator } from './MultiOrgActivityIndicator'
 
 export function SidebarContainer() {
   const { scope } = useScope()
@@ -46,7 +49,6 @@ export function SidebarContainer() {
   const { data: currentUser } = useGetCurrentUser()
   const isOrgMember = useIsOrganizationMember()
   const showOrgSwitcherSidebar = useShowOrgSwitcherSidebar()
-
   function handleCollapseSidebar() {
     setSidebarCollapsed((previous) => !previous)
   }
@@ -61,9 +63,9 @@ export function SidebarContainer() {
   if (!isOrgMember) return null
 
   return (
-    <>
-      <LayeredHotkeys keys='BracketLeft' callback={handleCollapseSidebar} />
-      <LayeredHotkeys keys='/' callback={goToSearchPage} />
+          <>
+        <LayeredHotkeys keys='BracketLeft' callback={handleCollapseSidebar} />
+        <LayeredHotkeys keys='/' callback={goToSearchPage} />
 
       {/* width spacer */}
       <m.div
@@ -144,6 +146,8 @@ function SidebarContent() {
           <OrganizationSwitcher />
           {!isDesktopApp && <SidebarActivity />}
         </div>
+
+        <MultiOrgActivityIndicator />
 
         <div className='flex flex-1 items-center gap-1'>
           <span className='flex-1'>

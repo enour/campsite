@@ -6,10 +6,14 @@ import { useOrderedLayeredHotkeys } from '@campsite/ui/DismissibleLayer/useLayer
 import { defaultInboxView } from '@/components/InboxItems/InboxSplitView'
 import { activityOpenAtom } from '@/components/Sidebar/SidebarActivity'
 import { useScope } from '@/contexts/scope'
+import { useOrganizationSwitchingHotkeys } from '@/hooks/useOrganizationSwitchingHotkeys'
 
 export function GlobalKeyboardShortcuts() {
   const { scope } = useScope()
   const setActivityOpen = useSetAtom(activityOpenAtom)
+
+  // Initialize organization switching hotkeys
+  useOrganizationSwitchingHotkeys()
 
   useOrderedLayeredHotkeys({
     keys: ['g', 'i'],
