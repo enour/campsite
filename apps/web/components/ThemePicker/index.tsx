@@ -52,7 +52,7 @@ export const ThemePicker = () => {
             aria-label='View density'
             onValueChange={(selectedTheme: Theme) => handleChange(selectedTheme)}
           >
-            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-3'>
+            <div className='grid gap-3 max-sm:space-y-3 sm:grid-cols-4'>
               <div
                 className={cn(
                   'light flex items-end justify-center rounded-md border bg-gray-50 px-1.5 pt-3 transition',
@@ -106,6 +106,36 @@ export const ThemePicker = () => {
                       {theme === 'dark' && (
                         <m.span
                           className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-blue-500 max-sm:hidden'
+                          layoutId='underline'
+                        />
+                      )}
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div
+                className={cn(
+                  'bg-secondary purple flex items-end justify-center rounded-md border px-1.5 pt-3 transition',
+                  {
+                    'border-purple-500 ring-2 ring-purple-800/60': theme === 'purple'
+                  }
+                )}
+              >
+                <RadioGroup.Item value='purple' id='purpleTheme' />
+                <label className='relative cursor-pointer' htmlFor='purpleTheme'>
+                  <span className='block h-full w-full overflow-hidden'>
+                    <span className='block rounded-t-sm border border-b-0 shadow-xl shadow-purple-900/95'>
+                      <Svg src='/themes/theme-purple' responsive />
+                    </span>
+                  </span>
+                  <span className='absolute inset-x-0 bottom-2 flex justify-center sm:-bottom-1'>
+                    <span className='relative'>
+                      <span className={buttonClasses}>Purple</span>
+
+                      {theme === 'purple' && (
+                        <m.span
+                          className='absolute inset-x-1.5 -bottom-3 h-0.5 rounded-full bg-purple-500 max-sm:hidden'
                           layoutId='underline'
                         />
                       )}
