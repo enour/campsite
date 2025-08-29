@@ -7,13 +7,16 @@
     "clean": "rm -rf .next .turbo .vercel node_modules",
     "dev": "next dev -p 3004",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "worker": "node dist/worker.js"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.51",
     "@ai-sdk/openai": "^0.0.67",
     "ai": "^3.4.10",
     "campsite-client": "0.1.0-alpha.1",
+    "bullmq": "^5.7.14",
+    "ioredis": "^5.3.2",
     "jsdom": "^25.0.1",
     "next": "catalog:",
     "react": "catalog:",

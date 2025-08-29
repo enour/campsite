@@ -10,4 +10,5 @@ web: npx turbo run dev --filter=@campsite/web --log-prefix=none
 html-to-image: cd html-to-image && PORT=9222 npm run dev
 styled-text-server: PORT=3002 AUTHTOKEN=d8c0a2827589659ff292a8999b024f24a185ed82 npx turbo run dev --filter=@campsite/styled-text-server --log-prefix=none
 sync-server: PORT=9000 npx turbo run dev --filter=@campsite/sync-server --log-prefix=none
+integrations-worker: npx turbo run build --filter=@campsite/integrations --log-prefix=none && node apps/integrations/dist/worker.js
 elasticsearch: trap 'docker stop elasticsearch' EXIT > /dev/null; docker start -a elasticsearch
