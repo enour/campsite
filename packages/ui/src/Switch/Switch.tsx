@@ -16,6 +16,9 @@ interface Props {
   onChange: (isChecked: boolean) => void
   size?: 'base' | 'lg'
   id?: string
+  ariaLabel?: string
+  ariaLabelledBy?: string
+  ariaDescribedBy?: string
 }
 
 export const Switch: React.FC<Props> = ({
@@ -28,7 +31,10 @@ export const Switch: React.FC<Props> = ({
   required,
   value,
   size = 'base',
-  id: _id
+  id: _id,
+  ariaLabel,
+  ariaLabelledBy,
+  ariaDescribedBy
 }) => {
   const fallbackId = useId()
   const id = _id || fallbackId
@@ -48,6 +54,9 @@ export const Switch: React.FC<Props> = ({
         required={required}
         value={value}
         onCheckedChange={onChange}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
         className={cn(
           'relative flex rounded-full p-0.5 transition focus-visible:ring-0',
           'before:pointer-events-none before:absolute before:-inset-[3px] before:rounded-full before:border before:border-blue-500 before:opacity-0 before:ring-2 before:ring-blue-500/20 before:transition-opacity focus:before:opacity-100',
@@ -86,8 +95,6 @@ interface LabelProps {
   label: string
   onClick?: () => void
 }
-
-// TODO: Add aria-describedby, aria-labelledby, aria-label capabilities https://cccaccessibility.org/web-1/web-developer-tutorials/aria-labelledby-vs-aria-describedby-vs-aria-label
 
 export const Label = ({ htmlFor, label, onClick }: LabelProps) => {
   return (
