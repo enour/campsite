@@ -11,7 +11,6 @@ import { Inter } from 'next/font/google'
 
 import { IS_PRODUCTION, LAST_CLIENT_JS_BUILD_ID_LS_KEY } from '@campsite/config'
 
-import { useClearEmptyDrafts } from '@/hooks/useClearEmptyDrafts'
 import { useStoredState } from '@/hooks/useStoredState'
 import { AppPropsWithLayout } from '@/utils/types'
 
@@ -23,9 +22,6 @@ const inter = Inter({
 export default function App<T>({ Component, pageProps }: AppPropsWithLayout<T>): JSX.Element {
   const getProviders = Component.getProviders ?? ((page) => page)
   const [_, setLsLastChecked] = useStoredState<number | null>(LAST_CLIENT_JS_BUILD_ID_LS_KEY, null)
-
-  // TODO: Delete this hook and implementation after 4/30/24
-  useClearEmptyDrafts()
 
   /*
     Whenever the app mounts for the first time, track the current time in local storage
