@@ -39,9 +39,13 @@ module Api
 
       # Discord webhook endpoint for receiving events
       def webhook
+        # Some Discord events (like MESSAGE_DELETE) may not have an id field.
+        # Generate a unique identifier to ensure uniqueness constraint is satisfied.
+        event_id = params[:d][:id] || "generated-#{SecureRandom.uuid}"
+
         event = DiscordEvent.create!(
           event_type: params[:t],
-          event_id: params[:d][:id],
+          event_id: event_id,
           payload: params[:d]
         )
 
