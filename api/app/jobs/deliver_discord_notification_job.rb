@@ -5,11 +5,11 @@ class DeliverDiscordNotificationJob < BaseJob
 
   def perform(notification)
     return unless notification.organization_membership
-    
-    user = notification.organization_membership.user
-    return unless user.discord_username.present?
 
-    organization = notification.organization_membership.organization
+    membership = notification.organization_membership
+    return unless membership.discord_user_id.present?
+
+    organization = membership.organization
     integration = organization.discord_integration
     return unless integration
 
@@ -21,7 +21,7 @@ class DeliverDiscordNotificationJob < BaseJob
     return unless channel_id
 
     # Send notification to Discord
-    send_discord_message(integration.token, channel_id, embed, user.discord_username)
+    send_discord_message(integration.token, channel_id, embed, membership.discord_user_id)
   end
 
   private
@@ -139,15 +139,15 @@ class DeliverDiscordNotificationJob < BaseJob
     organization.discord_notification_channel_id
   end
 
-  def send_discord_message(token, channel_id, embed, username_to_mention = nil)
+  def send_discord_message(token, channel_id, embed, user_id_to_mention = nil)
     message_data = embed.dup
-    
-    # Add mention if we have a Discord username
-    if username_to_mention
-      message_data[:content] = "<@#{username_to_mention}>"
+
+    # Add mention if we have a Discord user ID
+    if user_id_to_mention
+      message_data[:content] = "<@#{user_id_to_mention}>"
     end
 
-    response = HTTP.auth("Bearer #{token}")
+    response = HTTP.auth("Bot #{token}")
                   .post("https://discord.com/api/channels/#{channel_id}/messages", json: message_data)
 
     unless response.status.success?

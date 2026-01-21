@@ -63,14 +63,17 @@ class ProcessDiscordMessageJob < BaseJob
   end
 
   def format_discord_message(content)
+    # Escape HTML entities first to prevent XSS
+    escaped = CGI.escapeHTML(content)
+
     # Convert Discord markdown to HTML
     # This is a simplified version - you'd want more sophisticated parsing
-    html = content.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
+    html = escaped.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
                   .gsub(/\*(.*?)\*/, '<em>\1</em>')
                   .gsub(/```(.*?)```/m, '<pre><code>\1</code></pre>')
                   .gsub(/`(.*?)`/, '<code>\1</code>')
                   .gsub(/\n/, '<br>')
-    
+
     "<p>#{html}</p>"
   end
 

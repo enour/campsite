@@ -27,7 +27,12 @@ module Api
 
             # Get guild information
             guild_info = fetch_guild_info(token_response[:access_token])
-            
+
+            if guild_info.nil?
+              redirect_to_frontend_with_error("no_admin_guild")
+              return
+            end
+
             # Create or update the integration
             integration = current_organization.integrations.discord.first_or_initialize
             integration.update!(
@@ -76,11 +81,12 @@ module Api
             response = HTTP.auth("Bearer #{access_token}")
                           .get("https://discord.com/api/users/@me/guilds")
 
-            return {} unless response.status.success?
+            return nil unless response.status.success?
 
             guilds = JSON.parse(response.body)
             # Find the guild that the user is an admin of
-            guilds.find { |g| g["permissions"].to_i & 0x8 == 0x8 } || guilds.first || {}
+            # ADMINISTRATOR permission is 0x8
+            guilds.find { |g| g["permissions"].to_i & 0x8 == 0x8 }
           end
 
           def redirect_to_frontend_with_success

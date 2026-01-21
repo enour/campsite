@@ -7,7 +7,7 @@ class SyncDiscordChannelsJob < BaseJob
     return unless integration.discord_integration?
 
     # Fetch channels from Discord API
-    response = HTTP.auth("Bearer #{integration.token}")
+    response = HTTP.auth("Bot #{integration.token}")
                   .get("https://discord.com/api/guilds/#{integration.owner.discord_guild_id}/channels")
 
     return unless response.status.success?
