@@ -94,7 +94,7 @@ module Api
           end
 
           def redirect_to_frontend_with_error(error)
-            redirect_to "#{frontend_base_url}/settings/integrations/discord?error=#{error}", allow_other_host: true
+            redirect_to "#{frontend_base_url}/settings/integrations/discord?error=#{CGI.escape(error)}", allow_other_host: true
           end
 
           def frontend_base_url

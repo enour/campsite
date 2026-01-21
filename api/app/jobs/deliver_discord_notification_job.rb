@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class DeliverDiscordNotificationJob < BaseJob
-  queue_as :default
+  sidekiq_options queue: "default", retry: 3
 
-  def perform(notification)
+  def perform(id)
+    notification = Notification.find(id)
     return unless notification.organization_membership
 
     membership = notification.organization_membership

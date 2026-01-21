@@ -229,7 +229,7 @@ class Notification < ApplicationRecord
   def deliver_discord_notification_later
     return if !organization_membership.discord_notifications_enabled? || discord_message_delivered? || user.notifications_paused?
 
-    DeliverDiscordNotificationJob.perform_later(self)
+    DeliverDiscordNotificationJob.perform_async(id)
   end
 
   def deliver_slack_message!
